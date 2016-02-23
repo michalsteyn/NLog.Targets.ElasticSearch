@@ -13,7 +13,7 @@ namespace NLog.Targets.ElasticSearch.Tests
         [Test]
         public void OutputTest()
         {
-            var testDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            var testDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             Assert.IsNotNull(testDirectory, "Executing directory was null");
 
