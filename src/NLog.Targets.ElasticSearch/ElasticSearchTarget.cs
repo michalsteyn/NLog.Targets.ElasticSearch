@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Elasticsearch.Net;
-using Elasticsearch.Net.Connection;
-using Elasticsearch.Net.ConnectionPool;
-using Elasticsearch.Net.Serialization;
 using NLog.Common;
 using NLog.Config;
 using NLog.Layouts;
@@ -15,7 +12,7 @@ namespace NLog.Targets.ElasticSearch
     [Target("ElasticSearch")]
     public class ElasticSearchTarget : TargetWithLayout
     {
-        private IElasticsearchClient _client;
+        private IElasticLowLevelClient _client;
         private List<string> _excludedProperties = new List<string>(new[] { "CallerMemberName", "CallerFilePath", "CallerLineNumber", "MachineName", "ThreadId" }); 
 
         public string ConnectionStringName { get; set; }
@@ -57,7 +54,7 @@ namespace NLog.Targets.ElasticSearch
             var nodes = uri.Split(',').Select(url => new Uri(url));
             var connectionPool = new StaticConnectionPool(nodes);
             var config = new ConnectionConfiguration(connectionPool);
-            _client = new ElasticsearchClient(config, serializer:ElasticsearchSerializer);
+            _client = new ElasticLowLevelClient(config);
 
             if (!String.IsNullOrEmpty(ExcludedProperties))
                 _excludedProperties = new List<string>(ExcludedProperties.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries));
