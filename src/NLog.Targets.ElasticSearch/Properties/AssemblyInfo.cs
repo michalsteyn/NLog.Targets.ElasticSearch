@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NLog.Targets.ElasticSearch2")]
-[assembly: AssemblyDescription("NLog target for ElasticSearch 2.0")]
+[assembly: AssemblyDescription("NLog target for ElasticSearch 2.0, Forked from https://github.com/ReactiveMarkets/NLog.Targets.ElasticSearch")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NLog.Targets.ElasticSearch")]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using NLog.Config;
 using NUnit.Framework;
@@ -11,7 +13,13 @@ namespace NLog.Targets.ElasticSearch.Tests
         [Test]
         public void OutputTest()
         {
-            var config = new XmlLoggingConfiguration("NLog.Targets.ElasticSearch.Tests.dll.config");
+            var testDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+
+            Assert.IsNotNull(testDirectory, "Executing directory was null");
+
+            var configPath = Path.Combine(testDirectory, "NLog.Targets.ElasticSearch.Tests.dll.config");
+            
+            var config = new XmlLoggingConfiguration(configPath);
 
             LogManager.Configuration = config;
 
