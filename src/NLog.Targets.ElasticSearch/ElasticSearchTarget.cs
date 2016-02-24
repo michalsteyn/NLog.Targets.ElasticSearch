@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using Elasticsearch.Net;
 using NLog.Common;
@@ -54,6 +55,7 @@ namespace NLog.Targets.ElasticSearch
             var nodes = uri.Split(',').Select(url => new Uri(url));
             var connectionPool = new StaticConnectionPool(nodes);
             var config = new ConnectionConfiguration(connectionPool);
+            config.ThrowExceptions(false);
             _client = new ElasticLowLevelClient(config);
 
             if (!String.IsNullOrEmpty(ExcludedProperties))
@@ -94,12 +96,19 @@ namespace NLog.Targets.ElasticSearch
 
             foreach (var logEvent in logEvents)
             {
-                var document = new Dictionary<string, object>();
-                document.Add("@timestamp", logEvent.TimeStamp);
-                document.Add("level", logEvent.Level.Name);
+
+                var document = new Dictionary<string, object>
+                {
+                    {"timestamp", logEvent.TimeStamp.ToString("u")},
+                    {"level", logEvent.Level.Name},
+                    {"message", Layout.Render(logEvent) }
+                };
+
                 if (logEvent.Exception != null)
+                {
                     document.Add("exception", logEvent.Exception.ToString());
-                document.Add("message", Layout.Render(logEvent));
+                }
+
                 foreach (var field in Fields)
                 {
                     var renderedField = field.Layout.Render(logEvent);
@@ -127,9 +136,11 @@ namespace NLog.Targets.ElasticSearch
 
             try
             {
-                var result = _client.Bulk<byte[]>(payload);
+                var result = _client.Bulk<VoidResponse>(payload);
                 if (!result.Success)
+                {
                     InternalLogger.Error("Failed to send log messages to ElasticSearch: status={0} message=\"{1}\"", result.HttpStatusCode, result.OriginalException.Message);
+                }
             }
             catch (Exception ex)
             {
