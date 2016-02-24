@@ -1,16 +1,14 @@
-NLog.Targets.ElasticSearch 
+NLog.Targets.ElasticSearch2
 ==========================
-
-<img src="https://ci.appveyor.com/api/projects/status/53pvt1ao61hd3ym2/branch/master?retina=true" alt="Build Status"/>
 
 The Elasticsearch target works best with the BufferingWrapper target applied. By default the target assumes an Elasticsearch node is running on the localhost on port 9200.
 
-See [wiki](https://github.com/ReactiveMarkets/NLog.Targets.ElasticSearch/wiki) for parameters.
+See [wiki](https://github.com/ReactiveMarkets/NLog.Targets.ElasticSearch/wiki) for parameters, but note that the extension assembly must be listed as NLog.Targets.ElasticSearch2 instead of NLog.Targets.ElasticSearch.
 
 ```xml
 <nlog>
   <extensions>
-    <add assembly="NLog.Targets.ElasticSearch"/>
+    <add assembly="NLog.Targets.ElasticSearch2"/>
   </extensions>
   <targets>
     <target name="elastic" xsi:type="BufferingWrapper" flushTimeout="5000">
