@@ -7,7 +7,7 @@
     <description>$description$</description>
     <language>en-US</language>
     <tags>NLog ElasticSearch</tags>
-    <projectUrl>https://github.com/kwilliams-laneautomotive/NLog.Targets.ElasticSearch</projectUrl>
+    <projectUrl>https://github.com/michalsteyn/NLog.Targets.ElasticSearch</projectUrl>
     <licenseUrl>https://raw.githubusercontent.com/kwilliams-laneautomotive/NLog.Targets.ElasticSearch/master/LICENSE</licenseUrl>
   </metadata>
 </package>
