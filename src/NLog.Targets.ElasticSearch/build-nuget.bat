@@ -1,0 +1,1 @@
+nuget.exe pack NLog.Targets.ElasticSearch.csproj -IncludeReferencedProjects -OutputDirectory .\ -Prop Configuration=Release -Prop NuGetPack=1 -Verbosity Detailed
